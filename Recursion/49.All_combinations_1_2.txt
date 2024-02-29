@@ -1,0 +1,36 @@
+
+let n = 3;
+let final = []
+let arr = new Array(n);
+arr.fill(0);
+// (n,arr,start_index)
+generateAllBinaryStrings(n, arr, 0);
+
+console.log(final)
+// Function to generate all binary strings
+function generateAllBinaryStrings(n, arr, i) {
+    if (i == n) {
+        let copy = []
+        let temp = ""
+        for (let j = 0; j < n; j++) {
+            temp += arr[j]
+        }
+        copy.push(temp)
+        final.push(copy);
+        return;
+    }
+    // First assign "0" at ith position
+    // and try for all other permutations
+    // for remaining positions
+    arr[i] = 1;
+    generateAllBinaryStrings(n, arr, i + 1);
+    // And then assign "1" at ith position
+    // and try for all other permutations
+    // for remaining positions
+    arr[i] = 2;
+    generateAllBinaryStrings(n, arr, i + 1);
+
+    arr[i] = 3;
+    generateAllBinaryStrings(n, arr, i + 1);
+}
+

@@ -1,0 +1,26 @@
+// real logic :-
+
+function pow(a, n) {
+  if (n == 0) return 1;
+
+  if (n % 2 == 0) return (pow(a, parseInt(n / 2)) * pow(a, parseInt(n / 2)));
+  return (pow(a, parseInt(n / 2))* (pow(a, parseInt(n / 2))* a));
+}
+let ans = pow(2, 10)
+console.log(ans)
+
+//===============================================================================================================
+//lets make it more optimsied : -
+
+function pow(a,n){
+  if(n==0) return 1;
+  let he= pow(a,parseInt(n/2));
+  let ha=he*he;
+
+  if(n%2==0) return ha;
+  else return ha*a;
+}
+let ans= pow(2,10)
+console.log(ans)
+
+=============================================================================================

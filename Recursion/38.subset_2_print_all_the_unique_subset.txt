@@ -1,0 +1,127 @@
+Problem Statement:
+//https://leetcode.com/problems/subsets-ii/description/
+ Given an array of integers that may contain duplicates the task is to return all possible subsets. Return only unique subsets and they can be in any order.
+
+Examples:
+
+Example 1:
+
+Input: array[] = [1,2,2]
+
+Output: [ [ ],[1],[1,2],[1,2,2],[2],[2,2] ]
+
+Explanation: We can have subsets ranging from  length 0 to 3. which are listed above. Also the subset [1,2] appears twice but is printed only once as we require only unique subsets.
+
+Input: array[] = [1]
+
+Output: [ [ ], [1] ]
+
+Explanation: Only two unique subsets are available
+
+======================================================================================================================================================================================
+//approach-1 :-(pick and not pick)
+
+
+const arr = [4, 4, 4, 1, 4]
+let HashSet = new Set()
+let ans = subsetSums(arr, arr.length);
+console.log(ans);
+
+function subsetSums(arr, N) {
+    const sumSubset = [];
+    subsetSumsHelper(0, 0, arr, N, sumSubset, []);
+    let result = Array.from(HashSet).map(subArray => [...subArray]);
+
+    for (let i = 0; i < result.length; i++) {
+        // Join the array elements into a string
+        let jsonString = result[i].join('');
+
+        // Parse the JSON-formatted string
+        let parsedArray = JSON.parse(jsonString);
+        result[i] = parsedArray
+    }
+    return (result)
+}
+function subsetSumsHelper(ind, sum, arr, N, sumSubset, subset) {
+    if (ind === N) {
+        subset.sort((a, b) => a - b)
+        HashSet.add(JSON.stringify(Array.from(subset)));
+
+        return;
+    }
+    // pick the element and also add to sum the element arr[ind]
+    subsetSumsHelper(ind + 1, sum + arr[ind], arr, N, sumSubset, [...subset, arr[ind]]);
+    // Do-not pick the element and so do not add to sum the element arr[ind]
+    subsetSumsHelper(ind + 1, sum, arr, N, sumSubset, subset);
+}
+
+==========================================================================================================
+//approach-2 :- backtracking :-
+
+function findSubsets(ind, nums, ds, ansList) {
+  ansList.push([...ds]); //at start , insert a empty array
+  for (let i = ind; i < nums.length; i++) {
+    if (i !== ind && nums[i] === nums[i - 1]) continue;
+    ds.push(nums[i]);
+    findSubsets(i + 1, nums, ds, ansList);
+    ds.pop();
+  }
+}
+
+function subsetsWithDup(nums) {
+  nums.sort((a, b) => a - b);
+  const ansList = [];
+  findSubsets(0, nums, [], ansList);
+  console.log(ansList);
+}
+
+const nums = [1, 2, 2]; //[ [ ],[1],[1,2],[1,2,2],[2],[2,2] ]
+subsetsWithDup(nums);
+
+
+================================================================================================================================================================================
+//scaler question :
+Problem Description
+Given a set of distinct integers A, return all possible subsets.
+
+NOTE:
+
+Elements in a subset must be in non-descending order.
+The solution set must not contain duplicate subsets.
+Also, the subsets should be sorted in ascending ( lexicographic ) order.
+The initial list is not necessarily sorted.
+
+-----------------------------------------------------------------------------------------
+
+
+================================================================================================================================================================================================================================
+
+
+function calcSubset(A, res, subset, index) {
+    // Add the current subset to the result list
+    res.push([...subset]);
+
+    // Generate subsets by recursively including and excluding elements
+    for (let i = index; i < A.length; i++) {
+        // Include the current element in the subset
+        subset.push(A[i]);
+
+        // Recursively generate subsets with the current element included
+        calcSubset(A, res, subset, i + 1);
+
+        // Exclude the current element from the subset (backtracking)
+        subset.pop();
+    }
+}
+module.exports = {
+    //param A : array of integers
+    //return a array of array of integers
+    subsets: function (A) {
+        const subset = [];
+        const res = [];
+        let index = 0;
+        A = A.sort((a, b) => a - b)
+        calcSubset(A, res, subset, index);
+        return res;
+    }
+};

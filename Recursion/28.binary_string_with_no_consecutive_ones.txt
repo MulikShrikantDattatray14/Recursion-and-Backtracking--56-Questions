@@ -1,0 +1,85 @@
+Given an integer N , Print all binary strings of size N which do not contain consecutive 1s.
+
+A binary string is that string which contains only 0 and 1.
+
+Example 1:
+
+Input:
+N = 3
+Output:
+000 , 001 , 010 , 100 , 101
+Explanation:
+None of the above strings contain consecutive 1s. "110" is not an answer as it has '1's occuring consecutively. 
+Your Task:
+
+You don't need to read input or print anything. Your task is to complete the function generateBinaryStrings() which takes an integer N as input and returns a list of all valid binary strings in lexicographically increasing order.
+
+Expected Time Complexity: O(2N)
+Expected Auxiliary Space: O(N)
+
+
+====================================================================================================
+
+//https://www.youtube.com/watch?v=NxOjGKpL9Tw
+
+//All the combinations of binary string with no consecutive ones
+
+const K = 3
+let final = []
+const n1 = "0";
+print(K - 1, n1);
+const n2 = "1";
+print(K - 1, n2);
+let ans = final;
+console.log(ans)
+
+
+function print(K, str) {
+    if (K === 0) {
+        final.push(str);
+        return;
+    }
+
+    if (str.charAt(str.length - 1) === "0") {// last character
+        const str1 = str + "1";
+        const str2 = str + "0";
+        print(K - 1, str2);
+        print(K - 1, str1);
+
+    }
+    if (str.charAt(str.length - 1) === "1") {
+        const str3 = str + "0";
+        print(K - 1, str3);
+    }
+
+
+}
+==================================================================================================================================================================
+
+//generate all the possible combintion of length k :
+
+const K = 2;
+const n1 = "0";
+print(K - 1, n1);
+const n2 = "1";
+print(K - 1, n2);
+function print(K, str) {
+  if (K === 0) {
+    console.log(str);
+    return;
+  }
+
+  if (str.charAt(str.length - 1) === "0") {// last character
+    const str1 = str + "1";
+    const str2 = str + "0";
+    print(K - 1, str1);
+    print(K - 1, str2);
+  }
+
+  if (str.charAt(str.length - 1) === "1") {
+    const str3 = str + "1";
+    const str4 = str + "0";
+    print(K - 1, str3);
+    print(K - 1, str4);
+  }
+}

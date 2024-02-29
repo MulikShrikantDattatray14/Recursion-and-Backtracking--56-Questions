@@ -1,0 +1,31 @@
+Problem Description :
+
+Write a recursive function that checks whether string A is a palindrome or Not.
+Return 1 if the string A is a palindrome, else return 0.
+Note: A palindrome is a string that's the same when read forward and backward.
+
+======================================================================================================================================================================================
+
+
+===================================================================================================
+let A = "naman";
+let str = A;
+function palindrome(str, start, end) {
+  if (start >= end) return 1;
+  if (str[start] == str[end]) {
+    if (palindrome(str, start + 1, end - 1)) {
+      return 1;
+    } else {
+      return 0;
+    }
+  } else {
+    return 0;
+  }
+}
+
+let start = 0;
+let end = str.length - 1;
+let ans = palindrome(str, start, end);
+console.log(ans);
+
+==========================================================================================

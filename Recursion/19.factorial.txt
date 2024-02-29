@@ -1,0 +1,14 @@
+
+function factorial(n) {
+  // Base Condition.
+  if (n === 0) {
+    return 1;
+  }
+
+  // Problem broken down into 2 parts and then combined.
+  return n * factorial(n - 1);
+}
+
+// Testing the factorial function with n = 3.
+const n = 3;
+console.log(factorial(n));

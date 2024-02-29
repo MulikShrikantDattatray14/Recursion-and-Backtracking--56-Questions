@@ -1,0 +1,16 @@
+
+
+function func(i, n) {
+  // Base Condition.
+  if (i > n) return;
+
+  console.log(i);
+  // Function call to print i until i increments to n.
+  func(i + 1, n);
+}
+
+// Here, let’s take the value of n to be 4.
+const n = 4;
+
+// Call the function to execute the program.
+func(1, n); //1 2 3 4

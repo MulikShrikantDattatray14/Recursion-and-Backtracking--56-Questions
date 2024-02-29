@@ -1,0 +1,124 @@
+Problem Statement: 
+
+Given an undirected graph and a number m, determine if the graph can be colored with at most m colors such that no two adjacent vertices of the graph are colored with the same color.
+
+Examples:
+
+Example 1:
+Input: 
+N = 4
+M = 3
+E = 5
+Edges[] = {
+  (0, 1),
+  (1, 2),
+  (2, 3),
+  (3, 0),
+  (0, 2)
+}
+
+Output: 1
+
+Explanation: It is possible to colour the given graph using 3 colours.
+
+Example 2:
+
+Input: 
+N = 3
+M = 2
+E = 3
+Edges[] = {
+  (0, 1),
+  (1, 2),
+  (0, 2)
+}
+
+Output: 0
+
+
+Explanation: It is not possible to color.
+
+Time Complexity: O( N^M) (n raised to m)
+
+Space Complexity: O(N)
+=============================================================================================================================
+
+function graphColoring(G, color, i, C) {
+    // bipartite graph 
+    const n = G.length;
+    if (solve(i, G, color, n, C)) {
+        return true;
+    }
+    return false;
+}
+
+function solve(node, G, color, n, max_color) {
+    //if node reached last node
+    if (node === n) return true;
+
+    for (let i = 1; i <= max_color; i++) {
+        // colors
+        if (isSafe(node, G, color, n, i)) {
+            color[node] = i;
+            if (solve(node + 1, G, color, n, max_color)) return true;
+            color[node] = 0; // backtrack
+        }
+    }
+    return false;
+}
+function isSafe(node, G, color, n, col) {
+    for (let i = 0; i < G[node].length; i++) {
+        // check with the parent
+        const it = G[node][i];
+        // child is matching the parent, so adjacent node is same.
+        if (color[it] === col) return false;
+    }
+    return true;
+}
+
+
+//input example  -1
+const N = 4; // no of nodes
+const M = 3; //colours
+const G = [];
+for (let i = 0; i < N; i++) {
+    G.push([]);
+}
+
+G[0].push(1);
+G[1].push(0);
+G[1].push(2);
+G[2].push(1);
+G[2].push(3);
+G[3].push(2);
+G[3].push(0);
+G[0].push(3);
+G[0].push(2);
+
+// input example -2 :
+// N = 3; //edges
+// M = 2; // max_color
+// E = 3; //edges
+// const G = [];
+// for (let i = 0; i < N; i++) {
+//   G.push([]);
+// }
+// G[0].push(1);
+// G[1].push(0);
+// G[1].push(2);
+// G[2].push(1);
+// G[2].push(3);
+// G[0].push(2);
+// G[2].push(0);
+
+const color = new Array(N).fill(0);
+const ans = graphColoring(G, color, 0, M); // ( graph , color ,starting_node ,present _max_no_of_colours)
+
+if (ans) {
+    console.log("1");
+} else {
+    console.log("0");
+}
+
+
+======================================================================================================================================================================================

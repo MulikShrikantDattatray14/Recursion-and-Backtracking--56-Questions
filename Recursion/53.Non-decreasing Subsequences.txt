@@ -1,0 +1,67 @@
+
+
+Given an integer array nums, return all the different possible non-decreasing subsequences of the given array with at least two elements. You may return the answer in any order.
+
+ 
+
+Example 1:
+
+Input: nums = [4,6,7,7]
+Output: [[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]
+Example 2:
+
+Input: nums = [4,4,3,2,1]
+Output: [[4,4]]
+ 
+
+Constraints:
+
+1 <= nums.length <= 15
+-100 <= nums[i] <= 100
+
+==============================================================================================================
+
+
+let arr;
+let hashSet = new Set();
+
+function findSubsequences(nums) {
+  arr = nums;
+  let arrayList = [];
+  recursion(arrayList, 0);
+  let result = Array.from(hashSet).map(subArray => [...subArray]);
+  return result;
+}
+
+function recursion(arrayList, index) {
+  if (arrayList.length >= 2) {
+    hashSet.add(JSON.stringify(Array.from(arrayList)));
+  }
+
+  for (let i = index; i < arr.length; i++) {
+    // if the list is empty or the incoming element is greater than the previous element then consider that in the answer.
+    if (arrayList.length === 0 || arr[i] >= arrayList[arrayList.length - 1]) {
+      //push
+      arrayList.push(arr[i]);
+      //and move to next index
+      recursion(arrayList, i + 1);
+      arrayList.pop();// backtracking
+    }
+  }
+}
+
+// Example usage:
+let nums = [4, 6, 7, 7];
+let result = findSubsequences(nums);
+
+for (let i = 0; i < result.length; i++) {
+  // Join the array elements into a string
+  let jsonString = result[i].join('');
+
+  // Parse the JSON-formatted string
+  let parsedArray = JSON.parse(jsonString);
+  result[i] = parsedArray
+}
+console.log(result)
+
+====================================================================================================================

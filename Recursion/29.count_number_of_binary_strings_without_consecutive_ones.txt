@@ -1,0 +1,36 @@
+//https://www.youtube.com/watch?v=H7tshfFTSvw
+Given a positive integer N, count all possible distinct binary strings of length N such that there are no consecutive 1’s.
+
+Examples: 
+
+Input:  N = 2
+Output: 3
+// The 3 strings are 00, 01, 10
+Input: N = 3
+Output: 5
+// The 5 strings are 000, 001, 010, 100, 101
+================================================================================
+//https://www.youtube.com/watch?v=H7tshfFTSvw
+
+let mod = 1000000007;
+let n = 3;
+let ans = countconse(n);
+console.log(ans)
+
+function countconse(n) {
+    // when n=1 , zeroend count =1 and oneend count =1;
+    let zeroend = 1;// 
+    let oneend = 1;//
+    let sum = zeroend + oneend;// when n=1 , sum=2
+    if (n == 1) return sum;
+    let i = 2;
+    while (i <= n) {
+        oneend = zeroend % mod;
+        zeroend = sum % mod;
+        sum = (zeroend + oneend) % mod;
+        i++;
+    }
+    return (sum)
+
+
+}

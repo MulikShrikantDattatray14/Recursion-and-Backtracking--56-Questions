@@ -1,0 +1,207 @@
+Problem Statement: The n-queens is the problem of placing n queens on n × n chessboard such that no two queens can attack each other. Given an integer n, return all distinct solutions to the n -queens puzzle. Each solution contains a distinct boards configuration of the queen’s placement, where ‘Q’ and ‘.’ indicate queen and empty space respectively.
+
+Examples:
+
+Input: n = 4
+
+Output: [[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]
+
+=================================================================================================================================================================================================================================================================================
+
+// refer striver explaiantion on youtube- best explained :
+
+const N = 4;
+const queen = solveNQueens(N);
+console.log(queen);
+function construct(board) {
+    return board.map((row) => row.join(""));
+}
+
+// refer striver explaiantion on youtube- best explained :
+function solveNQueens(n) {
+    const board = [];
+    // make a board which has all the cells empty .
+    for (let i = 0; i < n; i++) {
+        const row = Array(n).fill(".");
+        board.push(row);
+    }
+    const res = [];
+    const leftRow = Array(n).fill(0);
+    const upperDiagonal = Array(2 * n - 1).fill(0);
+    const lowerDiagonal = Array(2 * n - 1).fill(0);
+    solve(0, board, res, leftRow, lowerDiagonal, upperDiagonal);
+
+    return res;
+}
+function solve(col, board, res, leftRow, lowerDiagonal, upperDiagonal) {
+    if (col === board.length) {
+        res.push(construct(board));
+        return;
+    }
+    // for each column , go rowwise(downwards)
+    for (let row = 0; row < board.length; row++) {
+        if (
+            leftRow[row] === 0 &&
+            lowerDiagonal[row + col] === 0 &&
+            upperDiagonal[(board.length - 1) + (col - row)] === 0
+        ) {
+            board[row][col] = "Q";
+            leftRow[row] = 1;
+            lowerDiagonal[row + col] = 1;
+            upperDiagonal[board.length - 1 + col - row] = 1;
+            // move to next column and start from 1st  row 
+            solve(col + 1, board, res, leftRow, lowerDiagonal, upperDiagonal);
+            //backtracking
+            board[row][col] = ".";
+            leftRow[row] = 0;
+            lowerDiagonal[row + col] = 0;
+            upperDiagonal[board.length - 1 + col - row] = 0;
+        }
+    }
+}
+
+
+=================================================================================================================================================================================================================================================================================
+SCALER QUESTION :-
+------------------
+
+Problem Description:-
+The N-queens puzzle is the problem of placing N queens on an N×N chessboard such that no two queens attack each other.
+
+
+
+Given an integer A denoting the value of N, return all distinct solutions to the N-queens puzzle.
+
+Each solution contains a distinct board configuration of the N-queens' placement, where 'Q' and '.' both indicate a queen and an empty space respectively.
+The final list should be generated in such a way that the indices of the queens in each list should be in reverse lexicographical order.
+
+
+
+Problem Constraints
+1 <= A <= 10
+
+
+
+Input Format
+First argument is an integer A denoting the size of chessboard
+
+
+
+Output Format
+Return an array consisting of all distinct solutions in which each element is a 2d char array representing a unique solution.
+
+
+
+Example Input
+Input 1:
+
+A = 4
+Input 2:
+
+A = 1
+
+
+Example Output
+Output 1:
+
+[
+ [".Q..",  // Solution 1
+  "...Q",
+  "Q...",
+  "..Q."],
+
+ ["..Q.",  // Solution 2
+  "Q...",
+  "...Q",
+  ".Q.."]
+]
+Output 1:
+
+[
+ [Q]
+]
+
+
+Example Explanation
+Explanation 1:
+
+There exist only two distinct solutions to the 4-queens puzzle:
+Explanation 1:
+
+There exist only one distinct solutions to the 1-queens puzzle:
+
+
+
+================================================================
+A = 4
+let ans = [];
+solveNQueens(A, ans);
+return ans.reverse()
+
+function solveNQueens(A, ans) {
+    // create a board and fill zero into it , indicating that at start ,its all empty.
+    let M = []
+    for (let i = 0; i < A; i++) {
+        M.push(new Array(A).fill("."));
+    }
+    // start from 0th row and go columwise in placing the queen
+    NQueens(M, 0, ans);
+}
+
+function NQueens(M, r, ans) {
+    if (r === A) {// when we reach last row , push board into the ans array
+
+        let copy = []
+        for (let i = 0; i < A; i++) {
+            let temp = ""
+            for (let j = 0; j < A; j++) {
+                temp += M[i][j]
+            }
+            copy.push(temp)
+        }
+        ans.push(copy);
+        return;
+    }
+    // move column wise 
+    for (let c = 0; c < A; c++) {
+        if (isSafe(M, r, c)) {
+            M[r][c] = 'Q';
+            // move to next row 
+            NQueens(M, r + 1, ans);
+            //  backtrack
+            M[r][c] = '.';
+        }
+    }
+}
+
+function isSafe(M, row, col) {
+    // no need to check for row-wise , as in a row, we are placing only one , so now check for column and all diagonal direction.
+    // Check vertically upwards. i,e check in a column
+    // for a particular column , check for every row 
+    for (let r = row - 1; r >= 0; r--) {
+        if (M[r][col] == 'Q') {
+            return false;
+        }
+    }
+    // As there is no need to look down as we have not placed queeen in the below rows yet .so look only for the top left and top right 
+
+
+    // Check diagonally to the top left 
+    for (let r = row - 1, c = col - 1; r >= 0 && c >= 0; r--, c--) {
+        if (M[r][c] == 'Q') {
+            return false;
+        }
+    }
+
+    // Check diagonally to the top right
+    for (let r = row - 1, c = col + 1; r >= 0 && c < M.length; r--, c++) {
+        if (M[r][c] == 'Q') {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+======================================================================================================================================================================================

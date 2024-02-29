@@ -1,0 +1,35 @@
+function func(i, n) {
+    // Base Condition.
+    if (i <=0) return;
+   
+    console.log(i);
+    // Function call to print i until i increments to n.
+    func(i - 1, n);
+   
+}
+
+// Here, let’s take the value of n to be 4.
+//const n = 4;
+
+// Call the function to execute the program.
+//func(n, n);//4 3 2 1 
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// using backtracking
+// using backtracking
+function func1(i, n) {
+  // Base Condition.
+  if (i > n) return;
+  console.log(i);
+  // Function call to print i until i increments to n.
+  func1(i + 1, n);
+  console.log(i);
+
+}
+
+// Here, let’s take the value of n to be 4.
+const n = 4;
+
+// Call the function to execute the program.
+func1(1, n);//1 2 3 4 

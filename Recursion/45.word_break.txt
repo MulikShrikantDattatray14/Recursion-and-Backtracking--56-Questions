@@ -1,0 +1,100 @@
+Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+ 
+
+Example 1:
+
+Input: s = "leetcode", wordDict = ["leet","code"]
+Output: true
+Explanation: Return true because "leetcode" can be segmented as "leet code".
+Example 2:
+
+Input: s = "applepenapple", wordDict = ["apple","pen"]
+Output: true
+Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+Note that you are allowed to reuse a dictionary word.
+Example 3:
+
+Input: s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]
+Output: false
+ 
+
+Constraints:
+
+1 <= s.length <= 300
+1 <= wordDict.length <= 1000
+1 <= wordDict[i].length <= 20
+s and wordDict[i] consist of only lowercase English letters.
+All the strings of wordDict are unique.
+======================================================================================================================================================================================
+//approach -1 : more optimised code :-
+
+
+let s = "leetcode";
+let wordDict = ["leet", "code"];
+
+let ans = wordBreak(s, wordDict)
+console.log(ans)
+
+function wordBreak(s, wordDict) {
+    let dp = new Array(s.length).fill(-1)
+    let set = new Set(wordDict)
+    if (wordbreak(0, s, set, dp)) return true;
+    else return false;
+
+
+    function wordbreak(index, s, set, dp) {
+        if (s.length == index) {
+            return 1;
+        }
+        if (dp[index] != -1) return dp[index];
+
+        let left = ''
+        for (let i = index; i < s.length; i++) {
+            left = left + s[i];
+            if (set.has(left)) {
+                //let right = s.substring(i + 1);
+                if (wordbreak(i + 1, s, set, dp)) {
+                    dp[index] = 1;
+                    return 1;
+                }
+            }
+        }
+        dp[index] = 0;
+        return 0;
+    }
+}
+
+
+
+===============================================================================================================
+// approach-2 : using recursion and backtracking :-
+//https://www.youtube.com/watch?v=LmHWIsBQBU4
+let s = "leetcode";
+let wordDict = ["leet", "code"];
+// Output: true
+// Explanation: Return true because "leetcode" can be segmented as "leet code".
+let ans = "";
+let final = [];
+let set = new Set(wordDict);
+wordbreak(s, ans, set, final);
+if (final.length > 0) return true;
+else return false;
+
+function wordbreak(s, ans, set, final) {
+  if (s.length == 0) {
+    final.push(ans);
+    return;
+  }
+  for (let i = 0; i < s.length; i++) {
+    let left = s.substring(0, i + 1);
+    if (wordDict.includes(left)) {
+      let right = s.substring(i + 1);
+      wordbreak(right, ans + left + " ", wordDict, final);
+    }
+  }
+}
+
+======================================================================================

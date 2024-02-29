@@ -1,0 +1,87 @@
+Problem Statement: Given a string, find all the possible subsequences of the string.
+
+Examples:
+
+Example 1:
+Input: str = "abc"
+Output: a ab abc ac b bc c
+Explanation: Printing all the 7 subsequence for the string "abc".
+
+Example 2:
+Input: str = "aa"
+Output: a a aa 
+Explanation: Printing all the 3 subsequences for the string "aa"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Solution 1: Using bit manipulation : 
+
+Approach: Prerequisites: To check whether the ith bit is set or not.If n&(1<<i) != 0,then the ith bit is set.
+First, write down all the numbers from 0 to 2^(n)-1 and their bit representation.0 means I am not picking the character in my subsequence, and 1 means I am picking the character.
+
+Time Complexity: O(2^n * n)
+
+Reason: O(2^n) for the outer for loop and O(n) for the inner for loop.
+
+Space Complexity: O(1)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Solution 2: Using recursion(Backtracking) : 
+
+Intuition: Since we are generating subsets two cases will be possible, either you can pick the character or you cannot pick the character and move to the next character.
+
+Time Complexity: O(2^n)
+
+Space Complexity: O(n), recursion stack.
+
+===============================================================================================================================================================================================================================
+// //Solution 1: Using bit manipulation :
+function allPossibleStrings(s) {
+  const n = s.length;
+  const ans = ["_"]; // start with the empty array
+  // 1<<n = 2 ^ n
+  for (let num = 0; num < 1 << n; num++) {
+    let sub = "";
+    for (let i = 0; i < n; i++) {
+      // check if the ith bit is set or not
+      if ((num & (1 << i)) != 0) {
+        // search for 1 in every number
+        sub += s.charAt(i);
+      }
+    }
+    ans.push(sub);
+  }
+  ans.sort();
+  return ans;
+}
+
+const inputString = "abc"; // 2^n = 2^3 = 8 combinations .
+const result = allPossibleStrings(inputString);
+
+// print all the subsequences
+console.log("All possible subsequences are:");
+for (const it of result) {
+  console.log(it);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// using recursion see at last
+
+// Example usage:
+const nums1 = [-1, 1, 2];
+let result = [];
+generateSubsets(0, nums1, []);
+console.log(result);
+
+// code is same as non -decreasing subsequences , already solved
+
+function generateSubsets(index, nums, currentSubset) {
+    result.push([...currentSubset]);  // Add a copy of the current subset to the result
+
+    for (let i = index; i < nums.length; i++) {
+        currentSubset.push(nums[i]);
+        generateSubsets(i + 1, nums, currentSubset);
+        currentSubset.pop();  // Backtrack to explore other subsets
+    }
+}
+

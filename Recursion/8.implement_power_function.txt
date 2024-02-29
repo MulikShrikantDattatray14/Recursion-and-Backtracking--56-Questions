@@ -1,0 +1,35 @@
+Problem Description:
+
+Implement pow(A, B) % C.
+In other words, given A, B and C, Find (AB % C).
+Note: The remainders on division cannot be negative. In other words, make sure the answer you return is non-negative.
+
+======================================================================================================================================================================================
+
+
+// Do not write code to include libraries, main() function or accept any input from the console.
+// Initialization code is already written and hidden from you. Do not write code for it again.
+function power(A, B, C) {
+  if (A == 0) return 0n;
+  if (B == 0) return 1n;
+
+  let halfPower = power(A, Math.floor(B / 2), C);
+
+  let res = (BigInt(halfPower) * BigInt(halfPower)) % BigInt(C);
+  res = (res + BigInt(C)) % BigInt(C);
+
+  if (B % 2 == 0) {
+    return (res + BigInt(C)) % BigInt(C);
+  }
+
+  return (res * BigInt(A) + BigInt(C)) % BigInt(C);
+}
+let A = 2;
+let B = 10;
+let C = 1000
+let ans = Number(power(A, B, C));
+console.log(ans)
+
+
+
+ ====================================================================================================================================================================================

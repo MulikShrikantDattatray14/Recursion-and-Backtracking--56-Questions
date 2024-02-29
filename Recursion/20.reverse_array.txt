@@ -1,0 +1,39 @@
+
+// Approach -1  : 
+// function rev(arr, n, str) {
+//   if (n <= 0) {
+//     console.log(str);
+//     return;
+//   }
+//  str.push(arr[n-1]);
+//   rev(arr, n - 1, str);
+// }
+// let arr = [1, 2, 3, 4, 5];
+// let n = arr.length;
+// rev(arr, n, []);
+
+///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+//Approach -2 : 
+
+function reverseArrayRecursive(arr, start, end) {
+  // Base case: stop recursion when start index is greater than or equal to end index
+  if (start < end) {
+    // Swap elements at start and end indices
+    [arr[start], arr[end]] = [arr[end], arr[start]];
+
+    // Recursive call to reverse the rest of the array
+    reverseArrayRecursive(arr, start + 1, end - 1);
+  }
+}
+
+// Example usage:
+let myArray = [1, 2, 3, 4, 5];
+console.log("Original Array:", myArray);
+
+// Calling the reverseArrayRecursive function
+reverseArrayRecursive(myArray, 0, myArray.length - 1);
+
+console.log("Reversed Array:", myArray);
+
+

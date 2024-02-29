@@ -1,0 +1,36 @@
+Problem Description : 
+
+Given a number A, we need to find the sum of its digits using recursion.
+
+=========================================================================================
+
+let sum = 0;
+function printinc(A, n) {
+  if (n == 0) {
+    sum += Number(A[n]);
+    return sum;
+  }
+  sum += Number(A[n]);
+
+  return printinc(A, n - 1);
+}
+let A = 1999;
+A = String(A);
+let n = A.length - 1;
+sum = 0;
+let ans = printinc(A, n);
+console.log(ans);
+
+===========================================================================================
+----------------------------[OR]--------------------------------------------------------
+let A = 1999
+function sumdigit(n) {
+  if (n == 0) return 0;
+  //let dig = n % 10;
+  return (n % 10) + sumdigit(Math.floor(n / 10));
+}
+
+let ans = sumdigit(A);
+console.log(ans)
+
+============================================================================================

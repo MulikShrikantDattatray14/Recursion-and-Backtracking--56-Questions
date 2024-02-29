@@ -1,0 +1,60 @@
+Problem statement :
+
+You are given an array 'A' of 'N' integers. You have to return true if there exists a subset of elements of 'A' that sums up to 'K'. Otherwise, return false.
+
+For Example :
+'N' = 3, 'K' = 5, 'A' = [1, 2, 3].
+Subset [2, 3] has sum equal to 'K'.
+So our answer is True.
+Detailed explanation ( Input/output format, Notes, Images )
+Sample Input 1 :
+4 13
+4 3 5 2
+Sample Output 1 :
+No
+Sample Input 2 :
+5 14
+4 2 5 6 7
+Sample Output 2 :
+Yes
+
+
+=========================================================================
+//logic - same as  the previous question - 
+
+function findAllSubarraysWithGivenSum(arr, k) {
+    const n = arr.length;
+    const mpp = new Map();
+    let preSum = 0,
+      cnt = 0;
+  
+    mpp.set(0, 1);
+  
+    for (let i = 0; i < n; i++) {
+      preSum += arr[i];
+  
+      // Check if the Map contains preSum - k
+      if (mpp.has(preSum - k)) {
+        cnt += mpp.get(preSum - k);
+      }
+  
+      // Update the count of the current preSum in the Map
+      if (mpp.has(preSum)) {
+        mpp.set(preSum, mpp.get(preSum) + 1);
+      } else {
+        mpp.set(preSum, 1);
+      }
+    }
+  
+    console.log(mpp);
+    return cnt;
+  }
+  
+  const arr =[1, 2, 3];
+  let k = 5;
+  
+  const cnt = findAllSubarraysWithGivenSum(arr, k);
+  console.log(cnt);
+
+  ===========================================================================
+  ===========================================================================

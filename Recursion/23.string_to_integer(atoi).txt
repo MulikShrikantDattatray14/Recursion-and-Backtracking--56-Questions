@@ -1,0 +1,38 @@
+//https://leetcode.com/problems/string-to-integer-atoi/
+==========================================================================================
+let s = "   -42";
+
+let i = 0;
+let sign = 1;
+let result = 0;
+
+// Step 1: Read in and ignore any leading whitespace.
+while (s[i] === " ") {
+  i++;
+}
+
+// Step 2: Check if the next character is '-' or '+'.
+if (s[i] === "-" || s[i] === "+") {
+  sign = s[i] === "-" ? -1 : 1;
+  i++;
+}
+
+// Step 3: Read in the characters until the next non-digit character or the end of the input is reached.
+while (i < s.length && /\d/.test(s[i])) {
+  //So, /\d/.test(s[i]) essentially checks whether the character at index i of the string s is a digit. If it is, it returns true; otherwise, it returns false.
+  result = result * 10 + parseInt(s[i]);
+  
+  //So, parseInt(s[i], 10); will convert the i-th character of the string s into an integer using base 10 (decimal). If the character cannot be converted into a valid integer, parseInt will return NaN (Not a Number).
+  i++;
+}
+
+// Step 4: Change the sign as necessary.
+result *= sign;
+
+// Step 5: Clamp the result to the 32-bit signed integer range.
+const INT_MAX = 2 ** 31 - 1;
+const INT_MIN = -(2 ** 31);
+result = Math.max(Math.min(result, INT_MAX), INT_MIN);
+
+// Step 6: Return the integer as the final result.
+console.log(result);

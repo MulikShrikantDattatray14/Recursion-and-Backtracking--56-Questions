@@ -1,0 +1,19 @@
+Problem Description :
+
+Write a recursive function that takes a string, S, as input and prints the characters of S in reverse order.
+
+======================================================================================================================================================================================
+
+function solve(s) {
+  if (s.length == 0)
+    return;
+
+  let n = s.length;
+  solve(s.substr(1, n - 1));
+  process.stdout.write(s[0]);
+
+}
+let A = "mulik_shrikant_dattatray"
+solve(A)
+
+======================================================================================================================================================================================
